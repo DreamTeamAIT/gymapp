@@ -17,13 +17,13 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: tomato">
 			<div>
-				<a href="https://www.javaguides.net" class="navbar-brand">timetable
+				<a href="https://www.javaguides.net" class="navbar-brand"> Todo
 					App</a>
 			</div>
 
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">timetable</a></li>
+					class="nav-link">Timetable</a></li>
 			</ul>
 
 			<ul class="navbar-nav navbar-collapse justify-content-end">
@@ -37,36 +37,34 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">GYM TimeTable</h3>
+			<h3 class="text-center">Timetable</h3>
 			<hr>
 			<div class="container text-left">
 
 				<a href="<%=request.getContextPath()%>/new"
-					class="btn btn-success">Add timetable</a>
+					class="btn btn-success">Add New</a>
 			</div>
 			<br>
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						<th>Id</th>
 						<th>Time</th>
-						<th>Name</th>
+						<th>Class Type</th>
 						<th>Instructor</th>
 					</tr>
 				</thead>
 				<tbody>
 					<!--   for (Todo todo: todos) {  -->
-					<c:forEach var="timetable" items="${listTimetable}">
+					<c:forEach var="todo" items="${listTodo}">
 
 						<tr>
-							<td><c:out value="${timetable.id}" /></td>
-							<td><c:out value="${timetable.time}" /></td>
+							<td><c:out value="${timetable.myTime}" /></td>
 							<td><c:out value="${timetable.myClass}" /></td>
 							<td><c:out value="${timetable.instructor}" /></td>
 
-							<td><a href="edit?id=<c:out value='${timetable.id}' />">Edit</a>
+							<td><a href="edit?id=<c:out value='${todo.id}' />">Edit</a>
 								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${timetable.id}' />">Delete</a></td>
+								href="delete?id=<c:out value='${todo.id}' />">Delete</a></td>
 
 							<!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
           							<button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->

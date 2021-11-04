@@ -6,6 +6,7 @@ public class TimeTable {
 	private String time;
 	private String myClass;
 	private String instructor;
+	
 	public int getId() {
 		return id;
 		

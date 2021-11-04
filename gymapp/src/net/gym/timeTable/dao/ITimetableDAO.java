@@ -1,3 +1,6 @@
+
+// GIT web_link:		https://github.com/DreamTeamAIT/gymapp/tree/agron
+
 package net.gym.timeTable.dao;
 
 import java.sql.SQLException;

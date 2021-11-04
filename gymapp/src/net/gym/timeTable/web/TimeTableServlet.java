@@ -18,11 +18,9 @@ import net.gym.timeTable.dao.TimetableDAO;
 import net.gym.timeTable.model.TimeTable;
 
 
-/**
+/*
  * ControllerServlet.java This servlet acts as a page controller for the
  * application, handling all requests from the todo.
- * 
-
  */
 
 @WebServlet("/")
@@ -61,8 +59,7 @@ public class TimeTableServlet extends HttpServlet {
                     updateTimetable(request, response);
                     break;
                 case "/list":
-                    listTimetable(request, response);
-                   // listTodo(request, response);
+                    listTimetable(request, response);            
                     break;
                /** default:
                     RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
