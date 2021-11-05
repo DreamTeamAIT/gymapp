@@ -5,6 +5,20 @@ public class Instructor {
 	private String name;
 	private String gender;
 
+	public Instructor() {
+	}
+
+	public Instructor(String name, String gender) {
+		this.name = name;
+		this.gender = gender;
+	}
+
+	public Instructor(int id, String name, String gender) {
+		this.id = id;
+		this.name = name;
+		this.gender = gender;
+	}
+
 	public int getId() {
 		return id;
 	}
