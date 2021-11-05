@@ -66,29 +66,7 @@
 						</form>
 						<!--  <input type="submit" value="Submit" />-->
 					</div>
-					<div align="center">
-					<form action="<%=request.getContextPath()%>/updateInstructor"
-							method="post">
-							<table style="with: 100%">
-								<tr>
-									<td>Instructor Name</td>
-									<td><input type="text" name="name" /></td>
-								</tr>
-								
-								<tr>
-									<td>Gender</td>
-									<td><input type="text" name="gender" /></td>
-								</tr>
-								<tr>
-									<td></td>
-									
-								</tr>
-							</table>
-							<button type="submit" class="btn btn-success">Update</button>
-						</form>
-						<!--  <input type="submit" value="Submit" />-->
-						</div>
-					</div>
+				
 					
 				</tbody>
 

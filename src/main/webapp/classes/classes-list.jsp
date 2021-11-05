@@ -21,7 +21,7 @@
      </a>
    </div>
    
-   <ul class="navbar-nav">
+  		 <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/list"
      class="nav-link">Classes</a></li>
    </ul>
@@ -29,7 +29,12 @@
     <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/instructorList"
      class="nav-link">Instructors</a></li>
-   </ul>  
+   </ul>
+   
+   <ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/timetableList"
+     class="nav-link">Timetable</a></li>
+   </ul> 
 
    <ul class="navbar-nav navbar-collapse justify-content-end">
     <li><a href="<%=request.getContextPath()%>/logout"

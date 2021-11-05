@@ -15,6 +15,8 @@ import net.gym.classes.dao.ClassesCRUDDao;
 import net.gym.classes.model.Classes;
 import net.gym.instructor.dao.InstructorDao;
 import net.gym.instructor.model.Instructor;
+import net.gym.timetable.dao.TimetableDAO;
+import net.gym.timetable.model.TimeTable;
 
 /**
  * Servlet implementation class ClassesCRUDServlet
@@ -24,6 +26,7 @@ public class ClassesCRUDServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ClassesCRUDDao classesCRUDDao = new ClassesCRUDDao();
 	private InstructorDao instructorDao = new InstructorDao();
+	private TimetableDAO timetableDao = new TimetableDAO();
 
 	// public void init() {
 	// classesCRUDDao = new ClassesCRUDDao();
@@ -89,6 +92,10 @@ public class ClassesCRUDServlet extends HttpServlet {
 			case "/deleteInstructor":
 				deleteInstructor(request, response);
 				break;
+			case "/timetableList":
+				listTimetable(request, response);
+				System.out.println("chamei timetableList");
+				break;
 
 			default:
 				System.out.println("chamei login");
@@ -100,6 +107,14 @@ public class ClassesCRUDServlet extends HttpServlet {
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
+	}
+
+	private void listTimetable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<TimeTable> listTimetable = timetableDao.selectAllTimetable();
+		request.setAttribute("listTimetable", listTimetable);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("timetable/timetable-list.jsp");
+		dispatcher.forward(request, response);
 	}
 
 	private void listClasses(HttpServletRequest request, HttpServletResponse response)
