@@ -86,6 +86,9 @@ public class ClassesCRUDServlet extends HttpServlet {
 			case "/updateInstructor":
 				updateInstructor(request, response);
 				break;
+			case "/deleteInstructor":
+				deleteInstructor(request, response);
+				break;
 
 			default:
 				System.out.println("chamei login");
@@ -216,6 +219,13 @@ public class ClassesCRUDServlet extends HttpServlet {
 		int classID = Integer.parseInt(request.getParameter("classID"));
 		classesCRUDDao.deleteClasses(classID);
 		response.sendRedirect("list");
+	}
+
+	private void deleteInstructor(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		instructorDao.deleteInstructor(id);
+		response.sendRedirect("instructorList");
 	}
 
 }
