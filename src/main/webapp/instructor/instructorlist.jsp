@@ -21,18 +21,16 @@
     <a href="https://www.javaguides.net" class="navbar-brand"> Gym
      App</a>
    </div>
-   
+
     <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/list"
      class="nav-link">Classes</a></li>
    </ul>
-
-   <ul class="navbar-nav">
-    <li><a href="<%=request.getContextPath()%>/list"
+   
+    <ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/instructorList"
      class="nav-link">Instructors</a></li>
    </ul>
-   
-   
 
    <ul class="navbar-nav navbar-collapse justify-content-end">
     <li><a href="<%=request.getContextPath()%>/logout"
@@ -49,7 +47,7 @@
    <hr>
    <div class="container text-left">
 
-    <a href="<%=request.getContextPath()%>/instructorcontroller"
+    <a href="<%=request.getContextPath()%>/newInstructor"
      class="btn btn-success">Add Instructor</a>
    </div>
    <br>
@@ -63,18 +61,18 @@
     </thead>
     <tbody>
      <!--   for (Todo todo: todos) {  -->
-     <c:forEach var="instructor" items="${instructors}">
+     <c:forEach var="instructor" items="${listInstructors}">
 
       <tr>
        <td><c:out value="${instructor.name}" /></td>
        <td><c:out value="${instructor.gender}" /></td>
 
-       <td><a href="edit?id=<c:out value='${instructor.id}' />">Edit</a>
+       <td><a href="editInstructor?id=<c:out value='${instructor.id}' />">Edit</a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a
-        href="delete?id=<c:out value='${instructor.id}' />">Delete</a></td>
+        href="deleteInstructor?id=<c:out value='${instructor.id}' />">Delete</a></td>
 
-       <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
-                 <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
+      <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
+                 <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> --> 
       </tr>
      </c:forEach>
      <!-- } -->

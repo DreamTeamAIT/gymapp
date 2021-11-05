@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.gym.classes.dao.ClassesCRUDDao;
 import net.gym.classes.model.Classes;
+import net.gym.instructor.dao.InstructorDao;
+import net.gym.instructor.model.Instructor;
 
 /**
  * Servlet implementation class ClassesCRUDServlet
@@ -20,11 +22,16 @@ import net.gym.classes.model.Classes;
 @WebServlet("/")
 public class ClassesCRUDServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	private ClassesCRUDDao classesCRUDDao;
+	private ClassesCRUDDao classesCRUDDao = new ClassesCRUDDao();
+	private InstructorDao instructorDao = new InstructorDao();
 
-	public void init() {
-		classesCRUDDao = new ClassesCRUDDao();
-	}
+	// public void init() {
+	// classesCRUDDao = new ClassesCRUDDao();
+	// }
+
+	// public void initInstructors() {
+	// instructorDao = new InstructorDao();
+	// }
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -63,8 +70,28 @@ public class ClassesCRUDServlet extends HttpServlet {
 			case "/list":
 				listClasses(request, response);
 				break;
+			case "/instructorList":
+				ListTodo(request, response);
+				System.out.println("chamei instructorList");
+				break;
+			case "/newInstructor":
+				showNewInstructorForm(request, response);
+				break;
+			case "/insertInstructor":
+				insertInstructor(request, response);
+				break;
+			case "/editInstructor":
+				showEditInstructorForm(request, response);
+				break;
+			case "/updateInstructor":
+				updateInstructor(request, response);
+				break;
+			case "/deleteInstructor":
+				deleteInstructor(request, response);
+				break;
 
 			default:
+				System.out.println("chamei login");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 				dispatcher.forward(request, response);
 				break;
@@ -77,15 +104,36 @@ public class ClassesCRUDServlet extends HttpServlet {
 
 	private void listClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
+		System.out.println("chamei listCLasses");
 		List<Classes> listClasses = classesCRUDDao.selectAllClasses();
 		request.setAttribute("listClasses", listClasses);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-list.jsp");
 		dispatcher.forward(request, response);
 	}
 
+	private void ListTodo(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+
+		// RequestDispatcher dispatcher =
+		// request.getRequestDispatcher("instructor/instructorlist.jsp");
+		// dispatcher.forward(request, response);
+		List<Instructor> listInstructors = instructorDao.selectAllInstructors();
+		request.setAttribute("listInstructors", listInstructors);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("instructor/instructorlist.jsp");
+		System.out.println("chamei ListTodo");
+		dispatcher.forward(request, response);
+
+	}
+
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-form.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void showNewInstructorForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("instructor/instructor.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -95,6 +143,16 @@ public class ClassesCRUDServlet extends HttpServlet {
 		Classes existingClass = classesCRUDDao.selectClasses(classID);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-form.jsp");
 		request.setAttribute("classes", existingClass);
+		dispatcher.forward(request, response);
+
+	}
+
+	private void showEditInstructorForm(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		Instructor existingInstructor = instructorDao.selectInstructor(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("instructor/instructor-form.jsp");
+		request.setAttribute("instructor", existingInstructor);
 		dispatcher.forward(request, response);
 
 	}
@@ -116,6 +174,17 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("list");
 	}
 
+	private void insertInstructor(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+
+		Instructor newInstructor = new Instructor(name, gender);
+		instructorDao.insertInstructor(newInstructor);
+		response.sendRedirect("instructorList");
+	}
+
 	private void updateClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -131,11 +200,32 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("list");
 	}
 
+	private void updateInstructor(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+
+		Instructor updateInstructor = new Instructor(id, name, gender);
+
+		instructorDao.updateInstructor(updateInstructor);
+
+		response.sendRedirect("instructorList");
+	}
+
 	private void deleteClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
 		classesCRUDDao.deleteClasses(classID);
 		response.sendRedirect("list");
+	}
+
+	private void deleteInstructor(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		instructorDao.deleteInstructor(id);
+		response.sendRedirect("instructorList");
 	}
 
 }

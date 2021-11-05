@@ -24,12 +24,7 @@
 
 			<ul class="navbar-nav">
 				<li><a href="<%=request.getContextPath()%>/list"
-					class="nav-link">Classes</a></li>
-			</ul>
-			
-			<ul class="navbar-nav">
-				<li><a href="<%=request.getContextPath()%>/InstructorListController"
-					class="nav-link">Instructors</a></li>
+					class="nav-link">Add instructor page</a></li>
 			</ul>
 
 			<ul class="navbar-nav navbar-collapse justify-content-end">
@@ -43,35 +38,61 @@
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
 		<div class="container">
-			<h3 class="text-center">Add Instructor</h3>
+			<h3 class="text-center">Instructors</h3>
 			<hr>
 			
 			<br>
-			<table class="table table-bordered">
+			<!--  <table class="table table-bordered">-->
 				<tbody>
 					<div align="center">
-						<form action="<%=request.getContextPath()%>/instructorcontroller"
+						<form action="<%=request.getContextPath()%>/insertInstructor"
 							method="post">
 							<table style="with: 100%">
 								<tr>
 									<td>Instructor Name</td>
 									<td><input type="text" name="name" /></td>
 								</tr>
+								
 								<tr>
 									<td>Gender</td>
 									<td><input type="text" name="gender" /></td>
 								</tr>
-
+								<tr>
+									<td></td>
+									
+								</tr>
 							</table>
-							<input type="submit" value="Submit" />
+							<button type="submit" class="btn btn-success">Add</button>
 						</form>
+						<!--  <input type="submit" value="Submit" />-->
 					</div>
-
-
-
+					<div align="center">
+					<form action="<%=request.getContextPath()%>/updateInstructor"
+							method="post">
+							<table style="with: 100%">
+								<tr>
+									<td>Instructor Name</td>
+									<td><input type="text" name="name" /></td>
+								</tr>
+								
+								<tr>
+									<td>Gender</td>
+									<td><input type="text" name="gender" /></td>
+								</tr>
+								<tr>
+									<td></td>
+									
+								</tr>
+							</table>
+							<button type="submit" class="btn btn-success">Update</button>
+						</form>
+						<!--  <input type="submit" value="Submit" />-->
+						</div>
+					</div>
+					
 				</tbody>
 
-			</table>
+			<!--</table>-->
 		</div>
 	</div>
 
