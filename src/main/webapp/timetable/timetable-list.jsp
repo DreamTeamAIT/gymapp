@@ -17,7 +17,7 @@
 		<nav class="navbar navbar-expand-md navbar-dark"
 			style="background-color: tomato">
 			<div>
-				<a href="https://www.javaguides.net" class="navbar-brand">timetable
+				<a href="https://www.javaguides.net" class="navbar-brand">Gym
 					App</a>
 			</div>
 
