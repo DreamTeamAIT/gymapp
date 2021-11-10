@@ -23,8 +23,8 @@
    </div>
    
    <ul class="navbar-nav">
-    <li><a href="<%=request.getContextPath()%>/list"
-     class="nav-link">Todos</a></li>
+    <li><a href="<%=request.getContextPath()%>/instructorList"
+     class="nav-link">Back to Instructors</a></li>
    </ul>
 
    <ul class="navbar-nav navbar-collapse justify-content-end">

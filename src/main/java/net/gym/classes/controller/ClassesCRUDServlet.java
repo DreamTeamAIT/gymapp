@@ -10,11 +10,14 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.gym.classes.dao.ClassesCRUDDao;
 import net.gym.classes.model.Classes;
 import net.gym.instructor.dao.InstructorDao;
 import net.gym.instructor.model.Instructor;
+import net.gym.login.dao.LoginDao;
+import net.gym.login.model.LoginBean;
 import net.gym.timetable.dao.TimetableDAO;
 import net.gym.timetable.model.TimeTable;
 
@@ -24,6 +27,7 @@ import net.gym.timetable.model.TimeTable;
 @WebServlet("/")
 public class ClassesCRUDServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	private LoginDao loginDao = new LoginDao();
 	private ClassesCRUDDao classesCRUDDao = new ClassesCRUDDao();
 	private InstructorDao instructorDao = new InstructorDao();
 	private TimetableDAO timetableDao = new TimetableDAO();
@@ -55,6 +59,10 @@ public class ClassesCRUDServlet extends HttpServlet {
 
 		try {
 			switch (action) {
+			case "/login":
+				System.out.println("chamei login");
+				authenticate(request, response);
+				break;
 			case "/new":
 				showNewForm(request, response);
 				break;
@@ -98,7 +106,8 @@ public class ClassesCRUDServlet extends HttpServlet {
 				break;
 
 			default:
-				System.out.println("chamei login");
+				// System.out.println("chamei login");
+				// authenticate(request, response);
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
 				dispatcher.forward(request, response);
 				break;
@@ -107,6 +116,32 @@ public class ClassesCRUDServlet extends HttpServlet {
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
 		}
+	}
+
+	private void authenticate(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		LoginBean loginBean = new LoginBean();
+		loginBean.setUsername(username);
+		loginBean.setPassword(password);
+
+		try {
+			if (loginDao.validate(loginBean)) {
+				System.out.println("chamei login dao");
+				List<Classes> listClasses = classesCRUDDao.selectAllClasses();
+				request.setAttribute("listClasses", listClasses);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-list.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				HttpSession session = request.getSession();
+				session.setAttribute("user", username);
+				response.sendRedirect("login.jsp");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
 	}
 
 	private void listTimetable(HttpServletRequest request, HttpServletResponse response)
