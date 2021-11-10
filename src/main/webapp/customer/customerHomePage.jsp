@@ -3,10 +3,12 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="../common/header.jsp"></jsp:include>
 <meta charset="ISO-8859-1">
-<title>Deletion Error</title>
+<title>Customer Home Page</title>
 </head>
 <body>
-	<h1>Account not found. Confirm name and password are correct.</h1>
+	<h1>Log in Successful</h1>
 </body>
+ <jsp:include page="../common/footer.jsp"></jsp:include>
 </html>

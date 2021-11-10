@@ -4,12 +4,14 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Insert title here</title>
+<title>Delete Account</title>
+<jsp:include page="../common/header.jsp"></jsp:include>
 </head>
+
 <body>
  <div align="center">
   <h1>Delete Customer Account</h1>
-  <form action="<%= request.getContextPath() %>/delete" method="post">
+  <form action="<%= request.getContextPath() %>/a" method="post">
    <table style="with: 80%">
     <tr>
      <td>First Name</td>
@@ -31,5 +33,6 @@
    <input type="submit" value="Delete" />
   </form>
  </div>
+ <jsp:include page="../common/footer.jsp"></jsp:include>
 </body>
 </html>

@@ -3,25 +3,26 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <html>
 <head>
-<title>GYM Application</title>
+<title>User Management Application</title>
 
 <link rel="stylesheet"
  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
  crossorigin="anonymous">
+ <jsp:include page="../common/header.jsp"></jsp:include>
 </head>
 
 </head>
 <body>
- <header>
+  <header>
   <nav class="navbar navbar-expand-md navbar-dark"
    style="background-color: tomato">
    <div>
-    <a href="https://www.ait.ie" class="navbar-brand"> Gym App
-     </a>
+    <a href="https://www.javaguides.net" class="navbar-brand"> Gym
+     App</a>
    </div>
-   
-  		 <ul class="navbar-nav">
+
+    		 <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/list"
      class="nav-link">Classes</a></li>
    </ul>
@@ -34,13 +35,8 @@
    <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/timetableList"
      class="nav-link">Timetable</a></li>
-   </ul> 
-	
-	<ul class="navbar-nav">
-    <li><a href="<%=request.getContextPath()%>/listCustomer"
-     class="nav-link">Customers</a></li>
-   </ul> 
-   
+   </ul>
+
    <ul class="navbar-nav navbar-collapse justify-content-end">
     <li><a href="<%=request.getContextPath()%>/logout"
      class="nav-link">Logout</a></li>
@@ -52,35 +48,38 @@
   <!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
 
   <div class="container">
-   <h3 class="text-center">List of Classes</h3>
+   <h3 class="text-center">List of Customers</h3>
    <hr>
    <div class="container text-left">
 
-    <a href="<%=request.getContextPath()%>/new"
-     class="btn btn-success">Add Class</a>
+    <a href="<%=request.getContextPath()%>/customerRegister"
+     class="btn btn-success">Add Customer</a>
    </div>
    <br>
    <table class="table table-bordered">
     <thead>
      <tr>
-      <th>Class</th>
-      <th>Instructor</th>
-      <th>Class Time</th>
-      <th>Actions</th>
+     <th>ID</th>
+      <th>First Name</th>
+      <th>Last Name</th>
+      <th>password</th>
+      <th>email</th>
      </tr>
     </thead>
     <tbody>
      <!--   for (Todo todo: todos) {  -->
-     <c:forEach var="classes" items="${listClasses}">
+     <c:forEach var="customer" items="${listCustomer}">
 
       <tr>
-       <td><c:out value="${classes.classname}" /></td>
-       <td><c:out value="${classes.instructor}" /></td>
-       <td><c:out value="${classes.classtime}" /></td>
+      <td><c:out value="${customer.id}" /></td>
+       <td><c:out value="${customer.firstName}" /></td>
+       <td><c:out value="${customer.lastName}" /></td>
+       <td><c:out value="${customer.password}" /></td>
+       <td><c:out value="${customer.email}" /></td>
 
-       <td><a href="edit?classID=<c:out value='${classes.classID}' />">Edit</a>
+       <td><a href="editCustomer?id=<c:out value='${customer.id}' />">Edit</a>
         &nbsp;&nbsp;&nbsp;&nbsp; <a
-        href="delete?classID=<c:out value='${classes.classID}' />">Delete</a></td>
+        href="customerDelete?id=<c:out value='${customer.id}' />">Delete</a></td>
 
        <!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
                  <button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
