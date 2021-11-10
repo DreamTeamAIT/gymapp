@@ -17,7 +17,7 @@ public class TimetableDAO implements ITimetableDAO {
 
 	private static final String SELECT_TIMETABLE_BY_ID = "select id,myTime,myClass,instructor from timetable where id =?";
 	private static final String SELECT_ALL_TIMETABLE = "select * from timetable";
-	private static final String DELETE_TIMETABLE_BY_ID = "delete from myTime where id = ?;";
+	private static final String DELETE_TIMETABLE_BY_ID = "delete from timetable where id = ?;";
 	private static final String UPDATE_TIMETABLE = "update timetable set myTime = ?, myClass= ?, instructor =? where id = ?;";
 
 	public TimetableDAO() {

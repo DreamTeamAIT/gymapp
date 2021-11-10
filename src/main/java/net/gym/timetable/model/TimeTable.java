@@ -17,8 +17,13 @@ public class TimeTable {
 	}
 
 	public TimeTable(int id, String time, String myClass, String instructor) {
-		super();
 		this.id = id;
+		this.time = time;
+		this.myClass = myClass;
+		this.instructor = instructor;
+	}
+	
+	public TimeTable(String time, String myClass, String instructor) {
 		this.time = time;
 		this.myClass = myClass;
 		this.instructor = instructor;

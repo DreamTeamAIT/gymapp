@@ -96,6 +96,21 @@ public class ClassesCRUDServlet extends HttpServlet {
 				listTimetable(request, response);
 				System.out.println("chamei timetableList");
 				break;
+			case "/newTimeTable":
+				showNewTimeTableForm(request, response);
+				break;
+			case "/insertTimeTable":
+				insertTimeTable(request, response);;
+				break;
+			case "/editTimeTable":
+				showEditInstructorForm(request, response);
+				break;
+			case "/updateTimeTable":
+				updateTimeTable(request, response);
+				break;
+			case "/deleteTimeTable":
+				deleteTimeTable(request, response);
+				break;
 
 			default:
 				System.out.println("chamei login");
@@ -151,6 +166,12 @@ public class ClassesCRUDServlet extends HttpServlet {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("instructor/instructor.jsp");
 		dispatcher.forward(request, response);
 	}
+	
+	private void showNewTimeTableForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("timetable/timetable-form.jsp");
+		dispatcher.forward(request, response);
+	}
 
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
@@ -199,6 +220,18 @@ public class ClassesCRUDServlet extends HttpServlet {
 		instructorDao.insertInstructor(newInstructor);
 		response.sendRedirect("instructorList");
 	}
+	
+	private void insertTimeTable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+
+		String time = request.getParameter("time");
+		String myClass = request.getParameter("myClass");
+		String instructor = request.getParameter("instructor");
+
+		TimeTable timeTable = new TimeTable(time,myClass,instructor);
+		timetableDao.insertTimetable(timeTable);
+		response.sendRedirect("timetableList");
+	}
 
 	private void updateClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
@@ -215,6 +248,21 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("list");
 	}
 
+	private void updateTimeTable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+
+		String time = request.getParameter("time");
+		String myClass = request.getParameter("myClass");
+		String instructor = request.getParameter("instructor");
+
+		TimeTable timeTable = new TimeTable(id,time,myClass,instructor);
+
+		timetableDao.updateTimetable(timeTable);
+
+		response.sendRedirect("timetableList");
+	}
+	
 	private void updateInstructor(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -241,6 +289,13 @@ public class ClassesCRUDServlet extends HttpServlet {
 		int id = Integer.parseInt(request.getParameter("id"));
 		instructorDao.deleteInstructor(id);
 		response.sendRedirect("instructorList");
+	}
+	
+	private void deleteTimeTable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		timetableDao.deleteTimetable(id);
+		response.sendRedirect("timetableList");
 	}
 
 }

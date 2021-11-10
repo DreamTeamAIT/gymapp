@@ -51,7 +51,7 @@
 			<hr>
 			<div class="container text-left">
 
-				<a href="<%=request.getContextPath()%>/new"
+				<a href="<%=request.getContextPath()%>/newTimeTable"
 					class="btn btn-success">Add timetable</a>
 			</div>
 			<br>
