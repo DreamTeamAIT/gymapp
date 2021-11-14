@@ -1,11 +1,9 @@
-package net.gym.timeTable.model;
+package net.gym.timeTable.test;
 
-import net.gym.timeTable.model.TimetableExceptionHandler;
-
+//import net.gym.timeTable.test.TimetableExceptionHandler;
 
 public class TimeTable {
 
-	
 	private int id;
 	private String time;
 	private String myClass;
@@ -52,13 +50,18 @@ public class TimeTable {
 		this.instructor = instructor;
 	}
 	
-//*************************************************************************************************
+
+	public void validateId_timetable(int minValue) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	// +++++++++++++++++++++++++++++ validate Id
 	//Id is a positive number
 	// we throw an exception for negative numbers
 	public void validateId(int id) throws TimetableExceptionHandler {
 		if (id < 0)
-			throw new TimetableExceptionHandler("Error: You can't enter a number below 1");
+			throw new TimetableExceptionHandler("Error: You cant enter a number below 1");
 	}
 	
 
@@ -71,15 +74,5 @@ public class TimeTable {
 		else if (myClass.length() > 30)
 			throw new TimetableExceptionHandler("Error: myClass length not greater then 30");
 	}	
-	
-	// +++++++++++++++++++++++++++++ validate myClass
-			//instructor cannot be empty
-			// we throw an exception for empty name instructor or length larger than 30 characters
-		public void ValidateInstructor(String instructor) throws TimetableExceptionHandler {
-			if (instructor.isEmpty() || instructor.isBlank())
-				throw new TimetableExceptionHandler("Error: instructor must contain characters");
-			else if (instructor.length() > 30)
-				throw new TimetableExceptionHandler("Error: instructor name's length not greater than 30");
-		}	
 	
 }
