@@ -5,12 +5,16 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
-<jsp:include page="../common/header.jsp"></jsp:include>
+<link rel="stylesheet"
+	 href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	 integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	 crossorigin="anonymous">
+	 <jsp:include page="../common/header.jsp"></jsp:include>
 </head>
 <body>
  <div align="center">
   <h1>Customer Register Form</h1>
-  <form action="<%= request.getContextPath() %>/customerRegister" method="post">
+  <form action="<%= request.getContextPath() %>/insertCustomer" method="post">
    <table style="with: 80%">
     <tr>
      <td>First Name</td>

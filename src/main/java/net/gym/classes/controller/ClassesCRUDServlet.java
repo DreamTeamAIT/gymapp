@@ -99,6 +99,12 @@ public class ClassesCRUDServlet extends HttpServlet {
 				listTimetable(request, response);
 				System.out.println("chamei timetableList");
 				break;
+			case "/newCustomer":
+				showNewCustomerForm(request,response);
+				break;
+			case "/insertCustomer":
+				insertCustomer(request, response);
+				break;
 			case "/listCustomer":
 				listCustomer(request,response);
 				break;
@@ -182,6 +188,13 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void showNewCustomerForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerRegister.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -237,6 +250,24 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
+	private void insertCustomer(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ClassNotFoundException {
+
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		/*
+		 * DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-mm-dd"); LocalDate
+		 * targetDate = LocalDate.parse(request.getParameter("targetDate"),df);
+		 */
+
+		Customer customer = new Customer("",firstName, lastName, password, email);
+		customerDao.registerCustomer(customer);
+		response.sendRedirect("listCustomer");
+	}
+	
 	private void updateClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -266,6 +297,7 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
+	
 	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		String firstName = request.getParameter("firstName");

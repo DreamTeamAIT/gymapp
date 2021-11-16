@@ -10,7 +10,7 @@ public class JDBCUtils {
 
 	private static String jdbcURL = "jdbc:mysql://localhost:3306/gym?useSSL=false";
 	private static String jdbcUsername = "root";
-	private static String jdbcPassword = "root";
+	private static String jdbcPassword = "geochelone";
 
 	public static Connection getConnection() {
 		Connection connection = null;

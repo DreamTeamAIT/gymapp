@@ -22,6 +22,7 @@ CREATE TABLE if not exists classes (
 PRIMARY KEY(classID)
 );
 insert into classes VALUES (0, "Yoga", "Agron", "12:00");
+insert into classes VALUES (0, "Spinning", "Peter", "14:00");
 
 #Instructor set-up
 drop table if exists instructor;
@@ -32,6 +33,7 @@ CREATE TABLE if not exists `instructor` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 insert into instructor VALUES(0, "Agron", "Male");
+insert into instructor VALUES(0, "Peter", "Male");
 
 #Customer set up
 DROP TABLE IF EXISTS customer ;
@@ -61,12 +63,13 @@ DROP TABLE IF EXISTS timetable;
     PRIMARY KEY (id));
     
 	INSERT INTO timetable VALUES (not null,'09:00', 'Poolside Gym', 'Agron');
+	INSERT INTO timetable VALUES (not null,'12:00', 'Gymside Pool', 'Peter');
    
     SELECT * FROM timetable;
     SELECT * FROM classes;
     SELECT * FROM instructor;
     SELECT * FROM customer;
-    
+    SELECT * FROM login;
     
 
     
