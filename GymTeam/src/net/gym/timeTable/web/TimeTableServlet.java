@@ -102,19 +102,19 @@ public class TimeTableServlet extends HttpServlet {
     // add new
     private void insertTimetable(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
     	
-    	int id = Integer.parseInt(request.getParameter("id"));
+    	//int id = Integer.parseInt(request.getParameter("id"));
     	//Int id = request.getParameter("id");
         String time = request.getParameter("time");
         String myClass = request.getParameter("myClass");
         String instructor = request.getParameter("instructor");
 
-        TimeTable newTimetable = new TimeTable(id, time, myClass, instructor);
+        TimeTable newTimetable = new TimeTable(time, myClass, instructor);
         timetableDAO.insertTimetable(newTimetable);
         response.sendRedirect("list");
     }
 
     
-    private void updateTimeTable(HttpServletRequest request, HttpServletResponse response)
+   /** private void updateTimeTable(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 
 		int id = Integer.parseInt(request.getParameter("id"));
@@ -127,7 +127,7 @@ public class TimeTableServlet extends HttpServlet {
 		timetableDAO.updateTimetable(timeTable);
 
 		response.sendRedirect("timetableList");
-	}
+	}*/
     
     // update
     private void updateTimetable(HttpServletRequest request, HttpServletResponse response) throws SQLException, IOException {
