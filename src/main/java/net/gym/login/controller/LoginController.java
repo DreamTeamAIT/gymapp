@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 
 import net.gym.login.dao.LoginDao;
 import net.gym.login.model.LoginBean;
-
+/**
 @WebServlet("/login")
 public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -54,4 +54,4 @@ public class LoginController extends HttpServlet {
 		}
 
 	}
-}
+}*/
