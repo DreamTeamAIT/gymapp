@@ -13,7 +13,7 @@ import net.gym.timeTable.model.TimeTable;
 public class TimetableDAO implements ITimetableDAO {
 
 	private static final String INSERT_TIMETABLE_SQL = "INSERT INTO timetable "
-			+ "  (id, myTime, myClass, instructor) VALUES " + " (?, ?, ?, ?);";
+			+ "  (myTime, myClass, instructor) VALUES " + " ( ?, ?, ?);";
 
 	private static final String SELECT_TIMETABLE_BY_ID = "select id,myTime,myClass,instructor from timetable where id =?";
 	private static final String SELECT_ALL_TIMETABLE = "select * from timetable";

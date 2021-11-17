@@ -16,17 +16,35 @@ public class TimeTable {
 		
 		
 	}
+	//throws TimetableExceptionHandler
+		public TimeTable( String time, String myClass, String instructor) {
+			super();
+			this.time = time;
+			this.myClass = myClass;
+			this.instructor = instructor;
+		}
+	
 	
 	public TimeTable() {
 		super();
 	}
-
+//throws TimetableExceptionHandler
 	public TimeTable(int id, String time, String myClass, String instructor) {
 		super();
 		this.id = id;
 		this.time = time;
 		this.myClass = myClass;
 		this.instructor = instructor;
+		
+		try {
+			ValidateId(id);
+			ValidateTime(time);
+		    ValidateMyClass(myClass);
+			ValidateInstructor(instructor);
+		} catch (TimetableExceptionHandler e) {
+			//throw new TimetableExceptionHandler("Error: Failed to set timetable");
+		}
+			
 			
 	}
 	
@@ -52,15 +70,27 @@ public class TimeTable {
 		this.instructor = instructor;
 	}
 	
+	
 //*************************************************************************************************
 	// +++++++++++++++++++++++++++++ validate Id
 	//Id is a positive number
 	// we throw an exception for negative numbers
-	public void validateId(int id) throws TimetableExceptionHandler {
-		if (id < 0)
-			throw new TimetableExceptionHandler("Error: You can't enter a number below 1");
+	public void ValidateId(int id) throws TimetableExceptionHandler {
+		//if (id < 0)
+		//	throw new TimetableExceptionHandler("Error: You can't enter a number below 1");
 	}
 	
+	
+	// +++++++++++++++++++++++++++++ validate Time
+		//Time cannot be empty
+		// we throw an exception for empty Time or length larger than 10 characters
+	public void ValidateTime(String time) throws TimetableExceptionHandler {
+		
+		if (time.isEmpty() || time.isBlank())
+			throw new TimetableExceptionHandler("Error: Time must contain characters");
+		else if (time.length() > 30)
+			throw new TimetableExceptionHandler("Error: Time's length not greater than 10");
+	}
 
 	// +++++++++++++++++++++++++++++ validate myClass
 		//myClass cannot be empty
@@ -72,7 +102,7 @@ public class TimeTable {
 			throw new TimetableExceptionHandler("Error: myClass length not greater then 30");
 	}	
 	
-	// +++++++++++++++++++++++++++++ validate myClass
+	// +++++++++++++++++++++++++++++ validate instructor
 			//instructor cannot be empty
 			// we throw an exception for empty name instructor or length larger than 30 characters
 		public void ValidateInstructor(String instructor) throws TimetableExceptionHandler {
@@ -80,6 +110,11 @@ public class TimeTable {
 				throw new TimetableExceptionHandler("Error: instructor must contain characters");
 			else if (instructor.length() > 30)
 				throw new TimetableExceptionHandler("Error: instructor name's length not greater than 30");
+		}
+
+		public void testValidateTime2(String string) {
+			// TODO Auto-generated method stub
+			
 		}	
 	
 }
