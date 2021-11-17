@@ -1,5 +1,6 @@
 package net.gym.timeTable.model;
 
+
 import junit.framework.TestCase;
 import net.gym.timeTable.model.TimeTable;
 
@@ -17,14 +18,48 @@ public class TimeTableTest extends TestCase {
 	public void testValidateId() {
 		try {
 			TimeTable TTObj = new TimeTable();
-			TTObj.validateId(Integer.MIN_VALUE);
+			TTObj.ValidateId(Integer.MIN_VALUE);
 			fail("Exception expected");
 		} catch (TimetableExceptionHandler e) {
 			assertEquals("Error: You can't enter a number below 1", e.getMessage());
 		}
 	}
-
 	
+	// +++++++++++++++++++++++++++ TEST Time +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+			// Test 2:  empty  time
+			// Test Objective:To catch an empty - time
+		
+			// Inputs: name = ""
+			// Expected Output: Error: Time  must contain characters"
+			public void testValidateTime() {
+				try {
+					TimeTable gymObj = new TimeTable();
+					gymObj.ValidateTime("");
+					fail("Exception expected");
+				} catch (TimetableExceptionHandler e) {
+					assertEquals("Error: Time must contain characters", e.getMessage());
+				}
+			}
+
+			// +++++++++++++++++++++++++++ TEST accept Time +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+		// Test 2: validate  time
+		// Test Objective:To pass a test for the time
+	
+		// Inputs: name = "10:00"
+		// Expected Output: No Exception"
+			
+		/*	
+		public void testValidateTime2() {
+			try {
+			TimeTable time = new TimeTable();
+			time.testValidateTime2("10:00");		
+			}
+			 catch (TimetableExceptionHandler e) {
+				fail("Exception NOT expected");	
+				
+			}
+		}	
+	*/
 // +++++++++++++++++++++++++++ TEST myClass +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		// Test 2:  empty  myClass
 		// Test Objective:To catch an empty - myClass
