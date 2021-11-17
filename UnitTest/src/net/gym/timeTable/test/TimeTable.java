@@ -25,6 +25,15 @@ public class TimeTable {
 		this.time = time;
 		this.myClass = myClass;
 		this.instructor = instructor;
+		
+		try {
+			ValidateId(id);
+			//ValidateMyTime(time);
+		    ValidateMyClass(myClass);
+			//ValidateInstructor(instructor);
+		} catch (TimetableExceptionHandler e) {
+			//throw new TimetableExceptionHandler("Error: Failed to set timetable");
+		}
 			
 	}
 	
@@ -55,13 +64,17 @@ public class TimeTable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+// Validation of class
 
 	// +++++++++++++++++++++++++++++ validate Id
 	//Id is a positive number
 	// we throw an exception for negative numbers
-	public void validateId(int id) throws TimetableExceptionHandler {
+	public void ValidateId(int id) throws TimetableExceptionHandler {
+		/*
 		if (id < 0)
 			throw new TimetableExceptionHandler("Error: You cant enter a number below 1");
+			*/
 	}
 	
 
@@ -69,10 +82,12 @@ public class TimeTable {
 		//myClass cannot be empty
 		// we throw an exception for empty class or length larger than 30 characters
 	public void ValidateMyClass(String myClass) throws TimetableExceptionHandler {
+		/*
 		if (myClass.isEmpty() || myClass.isBlank())
 			throw new TimetableExceptionHandler("Error: myClass must contain characters");
 		else if (myClass.length() > 30)
 			throw new TimetableExceptionHandler("Error: myClass length not greater then 30");
+		*/
 	}	
 	
 }
