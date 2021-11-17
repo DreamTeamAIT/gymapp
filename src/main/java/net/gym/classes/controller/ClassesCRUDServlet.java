@@ -17,7 +17,8 @@ import net.gym.instructor.dao.InstructorDao;
 import net.gym.instructor.model.Instructor;
 import net.gym.timetable.dao.TimetableDAO;
 import net.gym.timetable.model.TimeTable;
-
+import net.gym.customer.model.Customer;
+import net.gym.customer.dao.CustomerDao;
 /**
  * Servlet implementation class ClassesCRUDServlet
  */
@@ -27,7 +28,9 @@ public class ClassesCRUDServlet extends HttpServlet {
 	private ClassesCRUDDao classesCRUDDao = new ClassesCRUDDao();
 	private InstructorDao instructorDao = new InstructorDao();
 	private TimetableDAO timetableDao = new TimetableDAO();
-
+	private CustomerDao customerDao = new CustomerDao();
+	
+	private String idString;
 	// public void init() {
 	// classesCRUDDao = new ClassesCRUDDao();
 	// }
@@ -96,7 +99,24 @@ public class ClassesCRUDServlet extends HttpServlet {
 				listTimetable(request, response);
 				System.out.println("chamei timetableList");
 				break;
-
+			case "/newCustomer":
+				showNewCustomerForm(request,response);
+				break;
+			case "/insertCustomer":
+				insertCustomer(request, response);
+				break;
+			case "/listCustomer":
+				listCustomer(request,response);
+				break;
+			case"/editCustomer":
+				showEditCustomerForm(request,response);
+				break;
+			case "/updateCustomer":
+				updateCustomer(request, response);
+				break;
+			case"/deleteCustomer":
+				deleteCustomer(request, response);
+				break;
 			default:
 				System.out.println("chamei login");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
@@ -106,8 +126,13 @@ public class ClassesCRUDServlet extends HttpServlet {
 			}
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
+
+	
 
 	private void listTimetable(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
@@ -138,8 +163,19 @@ public class ClassesCRUDServlet extends HttpServlet {
 		System.out.println("chamei ListTodo");
 		dispatcher.forward(request, response);
 
+		
 	}
 
+	private void listCustomer(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, IOException, ServletException, ClassNotFoundException{
+		// TODO Auto-generated method stub
+		List<Customer> customerList = customerDao.selectAllCustomer();
+		request.setAttribute("listCustomer", customerList);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerList.jsp");
+		dispatcher.forward(request, response);
+		
+	}
+	
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-form.jsp");
@@ -152,6 +188,13 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void showNewCustomerForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerRegister.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -171,7 +214,14 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
-
+	
+	private void showEditCustomerForm(HttpServletRequest request, HttpServletResponse response) 
+			throws SQLException, ServletException, IOException {
+		idString = request.getParameter("id");
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerUpdate.jsp");
+		dispatcher.forward(request, response);
+	}
 	private void insertClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 
@@ -200,6 +250,24 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
+	private void insertCustomer(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ClassNotFoundException {
+
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+
+		/*
+		 * DateTimeFormatter df = DateTimeFormatter.ofPattern("yyyy-mm-dd"); LocalDate
+		 * targetDate = LocalDate.parse(request.getParameter("targetDate"),df);
+		 */
+
+		Customer customer = new Customer("",firstName, lastName, password, email);
+		customerDao.registerCustomer(customer);
+		response.sendRedirect("listCustomer");
+	}
+	
 	private void updateClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -229,6 +297,29 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
+	
+	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		String firstName = request.getParameter("firstName");
+		String lastName = request.getParameter("lastName");
+		String email = request.getParameter("email");
+		String password = request.getParameter("password");
+		String id = idString;
+		try 
+		{
+			//We want to check for password and email duplicates, and if there are we want to stop the page and display an error
+			//If it passes, we want to update the customer.
+			Customer customer = new Customer("",firstName, lastName, password, email);
+			
+			customerDao.updateCustomer(customer, id);
+			
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		response.sendRedirect("listCustomer");
+	}
+	
 	private void deleteClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -243,4 +334,11 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
+	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
+		// TODO Auto-generated method stub
+			idString = request.getParameter("id");
+			customerDao.deleteCustomer(idString);
+			response.sendRedirect("listCustomer");
+	}
 }

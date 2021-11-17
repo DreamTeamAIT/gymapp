@@ -35,7 +35,12 @@
     <li><a href="<%=request.getContextPath()%>/timetableList"
      class="nav-link">Timetable</a></li>
    </ul> 
-
+	
+	<ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/listCustomer"
+     class="nav-link">Customers</a></li>
+   </ul> 
+   
    <ul class="navbar-nav navbar-collapse justify-content-end">
     <li><a href="<%=request.getContextPath()%>/logout"
      class="nav-link">Logout</a></li>

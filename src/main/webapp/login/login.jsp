@@ -8,10 +8,17 @@
         <title>Insert title here</title>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     </head>
-
+	<header>
+		  <nav class="navbar navbar-expand-md navbar-dark"
+			   style="background-color: tomato">
+			   <div>
+				    <a href="https://www.ait.ie" class="navbar-brand"> Gym App
+				     </a>
+			   </div>
+		   </nav>
+	</header>
     <body>
 
-        <jsp:include page="../common/header.jsp"></jsp:include>
         <div class="container col-md-8 col-md-offset-3" style="overflow: auto">
             <h1>Login Form</h1>
             <form action="<%=request.getContextPath()%>/login" method="post">
