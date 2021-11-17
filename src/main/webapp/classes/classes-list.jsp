@@ -14,7 +14,7 @@
 </head>
 <body>
  <header>
-  <nav class="navbar navbar-expand-md navbar-dark"
+ <!--  <nav class="navbar navbar-expand-md navbar-dark"
    style="background-color: tomato">
    <div>
     <a href="https://www.ait.ie" class="navbar-brand"> Gym App
@@ -45,7 +45,8 @@
     <li><a href="<%=request.getContextPath()%>/logout"
      class="nav-link">Logout</a></li>
    </ul>
-  </nav>
+  </nav> -->
+  <jsp:include page="../common/header.jsp"></jsp:include>
  </header>
 
  <div class="row">

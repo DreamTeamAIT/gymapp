@@ -10,15 +10,19 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import net.gym.classes.dao.ClassesCRUDDao;
 import net.gym.classes.model.Classes;
+import net.gym.customer.dao.CustomerDao;
+import net.gym.customer.model.Customer;
 import net.gym.instructor.dao.InstructorDao;
 import net.gym.instructor.model.Instructor;
+import net.gym.login.dao.LoginDao;
+import net.gym.login.model.LoginBean;
 import net.gym.timetable.dao.TimetableDAO;
 import net.gym.timetable.model.TimeTable;
-import net.gym.customer.model.Customer;
-import net.gym.customer.dao.CustomerDao;
+
 /**
  * Servlet implementation class ClassesCRUDServlet
  */
@@ -29,7 +33,8 @@ public class ClassesCRUDServlet extends HttpServlet {
 	private InstructorDao instructorDao = new InstructorDao();
 	private TimetableDAO timetableDao = new TimetableDAO();
 	private CustomerDao customerDao = new CustomerDao();
-	
+	private LoginDao loginDao = new LoginDao();
+
 	private String idString;
 	// public void init() {
 	// classesCRUDDao = new ClassesCRUDDao();
@@ -58,6 +63,10 @@ public class ClassesCRUDServlet extends HttpServlet {
 
 		try {
 			switch (action) {
+			case "/login":
+				System.out.println("chamei login");
+				authenticate(request, response);
+				break;
 			case "/new":
 				showNewForm(request, response);
 				break;
@@ -100,21 +109,21 @@ public class ClassesCRUDServlet extends HttpServlet {
 				System.out.println("chamei timetableList");
 				break;
 			case "/newCustomer":
-				showNewCustomerForm(request,response);
+				showNewCustomerForm(request, response);
 				break;
 			case "/insertCustomer":
 				insertCustomer(request, response);
 				break;
 			case "/listCustomer":
-				listCustomer(request,response);
+				listCustomer(request, response);
 				break;
-			case"/editCustomer":
-				showEditCustomerForm(request,response);
+			case "/editCustomer":
+				showEditCustomerForm(request, response);
 				break;
 			case "/updateCustomer":
 				updateCustomer(request, response);
 				break;
-			case"/deleteCustomer":
+			case "/deleteCustomer":
 				deleteCustomer(request, response);
 				break;
 			default:
@@ -132,7 +141,31 @@ public class ClassesCRUDServlet extends HttpServlet {
 		}
 	}
 
-	
+	private void authenticate(HttpServletRequest request, HttpServletResponse response)
+			throws IOException, ServletException {
+		String username = request.getParameter("username");
+		String password = request.getParameter("password");
+		LoginBean loginBean = new LoginBean();
+		loginBean.setUsername(username);
+		loginBean.setPassword(password);
+
+		try {
+			if (loginDao.validate(loginBean)) {
+				System.out.println("chamei login dao");
+				List<Classes> listClasses = classesCRUDDao.selectAllClasses();
+				request.setAttribute("listClasses", listClasses);
+				RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-list.jsp");
+				dispatcher.forward(request, response);
+			} else {
+				HttpSession session = request.getSession();
+				session.setAttribute("user", username);
+				response.sendRedirect("login.jsp");
+			}
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	private void listTimetable(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
@@ -163,19 +196,18 @@ public class ClassesCRUDServlet extends HttpServlet {
 		System.out.println("chamei ListTodo");
 		dispatcher.forward(request, response);
 
-		
 	}
 
-	private void listCustomer(HttpServletRequest request, HttpServletResponse response) 
-			throws SQLException, IOException, ServletException, ClassNotFoundException{
+	private void listCustomer(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException, ClassNotFoundException {
 		// TODO Auto-generated method stub
 		List<Customer> customerList = customerDao.selectAllCustomer();
 		request.setAttribute("listCustomer", customerList);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerList.jsp");
 		dispatcher.forward(request, response);
-		
+
 	}
-	
+
 	private void showNewForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("classes/classes-form.jsp");
@@ -194,7 +226,6 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
-	
 	private void showEditForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -214,14 +245,15 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 
 	}
-	
-	private void showEditCustomerForm(HttpServletRequest request, HttpServletResponse response) 
+
+	private void showEditCustomerForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		idString = request.getParameter("id");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerUpdate.jsp");
 		dispatcher.forward(request, response);
 	}
+
 	private void insertClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 
@@ -263,11 +295,11 @@ public class ClassesCRUDServlet extends HttpServlet {
 		 * targetDate = LocalDate.parse(request.getParameter("targetDate"),df);
 		 */
 
-		Customer customer = new Customer("",firstName, lastName, password, email);
+		Customer customer = new Customer("", firstName, lastName, password, email);
 		customerDao.registerCustomer(customer);
 		response.sendRedirect("listCustomer");
 	}
-	
+
 	private void updateClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -297,7 +329,6 @@ public class ClassesCRUDServlet extends HttpServlet {
 		response.sendRedirect("instructorList");
 	}
 
-	
 	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		String firstName = request.getParameter("firstName");
@@ -305,21 +336,21 @@ public class ClassesCRUDServlet extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		String id = idString;
-		try 
-		{
-			//We want to check for password and email duplicates, and if there are we want to stop the page and display an error
-			//If it passes, we want to update the customer.
-			Customer customer = new Customer("",firstName, lastName, password, email);
-			
+		try {
+			// We want to check for password and email duplicates, and if there are we want
+			// to stop the page and display an error
+			// If it passes, we want to update the customer.
+			Customer customer = new Customer("", firstName, lastName, password, email);
+
 			customerDao.updateCustomer(customer, id);
-			
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		response.sendRedirect("listCustomer");
 	}
-	
+
 	private void deleteClasses(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int classID = Integer.parseInt(request.getParameter("classID"));
@@ -337,8 +368,8 @@ public class ClassesCRUDServlet extends HttpServlet {
 	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-			idString = request.getParameter("id");
-			customerDao.deleteCustomer(idString);
-			response.sendRedirect("listCustomer");
+		idString = request.getParameter("id");
+		customerDao.deleteCustomer(idString);
+		response.sendRedirect("listCustomer");
 	}
 }
