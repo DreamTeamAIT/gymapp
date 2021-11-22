@@ -31,7 +31,7 @@ public class ClassesCRUDServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private ClassesCRUDDao classesCRUDDao = new ClassesCRUDDao();
 	private InstructorDao instructorDao = new InstructorDao();
-	private TimetableDAO timetableDao = new TimetableDAO();
+	private TimetableDAO timetableDAO = new TimetableDAO();
 	private CustomerDao customerDao = new CustomerDao();
 	private LoginDao loginDao = new LoginDao();
 
@@ -89,6 +89,21 @@ public class ClassesCRUDServlet extends HttpServlet {
 				ListTodo(request, response);
 				System.out.println("chamei instructorList");
 				break;
+			case "/insertTimetable":
+				insertTimetable(request, response);
+				break;
+			case "/newTimetable":
+				showNewTimetableForm(request, response);
+				break;
+			case "/deleteTimetable":
+				deleteTimetable(request, response);
+				break;
+			case "/editTimetable":
+				showEditTimetableForm(request, response);
+				break;
+			case "/updateTimetable":
+				updateTimetable(request, response);
+				break;
 			case "/newInstructor":
 				showNewInstructorForm(request, response);
 				break;
@@ -126,6 +141,7 @@ public class ClassesCRUDServlet extends HttpServlet {
 			case "/deleteCustomer":
 				deleteCustomer(request, response);
 				break;
+
 			default:
 				System.out.println("chamei login");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("login/login.jsp");
@@ -169,7 +185,7 @@ public class ClassesCRUDServlet extends HttpServlet {
 
 	private void listTimetable(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		List<TimeTable> listTimetable = timetableDao.selectAllTimetable();
+		List<TimeTable> listTimetable = timetableDAO.selectAllTimetable();
 		request.setAttribute("listTimetable", listTimetable);
 		RequestDispatcher dispatcher = request.getRequestDispatcher("timetable/timetable-list.jsp");
 		dispatcher.forward(request, response);
@@ -214,6 +230,12 @@ public class ClassesCRUDServlet extends HttpServlet {
 		dispatcher.forward(request, response);
 	}
 
+	private void showNewTimetableForm(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("timetable/timetable-form.jsp");
+		dispatcher.forward(request, response);
+	}
+
 	private void showNewInstructorForm(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("instructor/instructor.jsp");
@@ -246,12 +268,58 @@ public class ClassesCRUDServlet extends HttpServlet {
 
 	}
 
+	private void showEditTimetableForm(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		TimeTable existingTimetable = timetableDAO.selectTimetable(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("timetable/timetable-form.jsp");
+		request.setAttribute("timetable", existingTimetable);
+		dispatcher.forward(request, response);
+
+	}
+
 	private void showEditCustomerForm(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		idString = request.getParameter("id");
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		RequestDispatcher dispatcher = request.getRequestDispatcher("customer/customerUpdate.jsp");
 		dispatcher.forward(request, response);
+	}
+
+	private void insertTimetable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+
+		// int id = Integer.parseInt(request.getParameter("id"));
+		// Int id = request.getParameter("id");
+		String time = request.getParameter("time");
+		String myClass = request.getParameter("myClass");
+		String instructor = request.getParameter("instructor");
+
+		TimeTable newTimetable = new TimeTable(time, myClass, instructor);
+		timetableDAO.insertTimetable(newTimetable);
+		response.sendRedirect("timetableList");
+	}
+
+	private void deleteTimetable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int id = Integer.parseInt(request.getParameter("id"));
+		timetableDAO.deleteTimetable(id);
+		response.sendRedirect("timetableList");
+	}
+
+	private void updateTimetable(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+
+		int id = Integer.parseInt(request.getParameter("id"));
+		String time = request.getParameter("time");
+		String myClass = request.getParameter("myClass");
+		String instructor = request.getParameter("instructor");
+
+		TimeTable updateTimetable = new TimeTable(id, time, myClass, instructor);
+
+		timetableDAO.updateTimetable(updateTimetable);
+
+		response.sendRedirect("timetableList");
 	}
 
 	private void insertClasses(HttpServletRequest request, HttpServletResponse response)
