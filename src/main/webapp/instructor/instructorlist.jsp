@@ -14,15 +14,15 @@
 
 </head>
 <body>
- <header>
-  <!-- <nav class="navbar navbar-expand-md navbar-dark"
+<header>
+ <nav class="navbar navbar-expand-md navbar-dark"
    style="background-color: tomato">
    <div>
-    <a href="https://www.javaguides.net" class="navbar-brand"> Gym
-     App</a>
+    <a href="https://www.ait.ie" class="navbar-brand"> Gym App
+     </a>
    </div>
-
-    		 <ul class="navbar-nav">
+   
+  		 <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/list"
      class="nav-link">Classes</a></li>
    </ul>
@@ -35,14 +35,19 @@
    <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/timetableList"
      class="nav-link">Timetable</a></li>
-   </ul>
-
+   </ul> 
+	
+	<ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/listCustomer"
+     class="nav-link">Customers</a></li>
+   </ul> 
+   
    <ul class="navbar-nav navbar-collapse justify-content-end">
     <li><a href="<%=request.getContextPath()%>/logout"
      class="nav-link">Logout</a></li>
    </ul>
-  </nav>-->
-    <jsp:include page="../common/header.jsp"></jsp:include>
+  </nav> 
+  <!--<jsp:include page="../common/header.jsp"></jsp:include>-->
  </header>
 
  <div class="row">

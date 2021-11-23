@@ -13,15 +13,15 @@
 	
 </head>
 <body>
-	<header>
-		<!-- <nav class="navbar navbar-expand-md navbar-dark"
-			style="background-color: tomato">
-			<div>
-				<a href="https://www.javaguides.net" class="navbar-brand">Gym
-					App</a>
-			</div>
-
-			 <ul class="navbar-nav">
+<header>
+ <nav class="navbar navbar-expand-md navbar-dark"
+   style="background-color: tomato">
+   <div>
+    <a href="https://www.ait.ie" class="navbar-brand"> Gym App
+     </a>
+   </div>
+   
+  		 <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/list"
      class="nav-link">Classes</a></li>
    </ul>
@@ -34,15 +34,20 @@
    <ul class="navbar-nav">
     <li><a href="<%=request.getContextPath()%>/timetableList"
      class="nav-link">Timetable</a></li>
+   </ul> 
+	
+	<ul class="navbar-nav">
+    <li><a href="<%=request.getContextPath()%>/listCustomer"
+     class="nav-link">Customers</a></li>
+   </ul> 
+   
+   <ul class="navbar-nav navbar-collapse justify-content-end">
+    <li><a href="<%=request.getContextPath()%>/logout"
+     class="nav-link">Logout</a></li>
    </ul>
-
-			<ul class="navbar-nav navbar-collapse justify-content-end">
-				<li><a href="<%=request.getContextPath()%>/logout"
-					class="nav-link">Logout</a></li>
-			</ul>
-		</nav> -->
-		  <jsp:include page="../common/header.jsp"></jsp:include>
-	</header>
+  </nav> 
+  <!--<jsp:include page="../common/header.jsp"></jsp:include>-->
+ </header>
 
 	<div class="row">
 		<!-- <div class="alert alert-success" *ngIf='message'>{{message}}</div> -->
@@ -52,7 +57,7 @@
 			<hr>
 			<div class="container text-left">
 
-				<a href="<%=request.getContextPath()%>/new"
+				<a href="<%=request.getContextPath()%>/newTimetable"
 					class="btn btn-success">Add timetable</a>
 			</div>
 			<br>
@@ -75,9 +80,9 @@
 							<td><c:out value="${timetable.myClass}" /></td>
 							<td><c:out value="${timetable.instructor}" /></td>
 
-							<td><a href="edit?id=<c:out value='${timetable.id}' />">Edit</a>
+							<td><a href="editTimetable?id=<c:out value='${timetable.id}' />">Edit</a>
 								&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="delete?id=<c:out value='${timetable.id}' />">Delete</a></td>
+								href="deleteTimetable?id=<c:out value='${timetable.id}' />">Delete</a></td>
 
 							<!--  <td><button (click)="updateTodo(todo.id)" class="btn btn-success">Update</button>
           							<button (click)="deleteTodo(todo.id)" class="btn btn-warning">Delete</button></td> -->
