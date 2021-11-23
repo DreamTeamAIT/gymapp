@@ -340,9 +340,9 @@ public class ClassesCRUDServlet extends HttpServlet {
 			// We want to check for password and email duplicates, and if there are we want
 			// to stop the page and display an error
 			// If it passes, we want to update the customer.
-			Customer customer = new Customer("", firstName, lastName, password, email);
+			Customer customer = new Customer(id, firstName, lastName, password, email);
 
-			customerDao.updateCustomer(customer, id);
+			customerDao.updateCustomer(customer);
 
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block

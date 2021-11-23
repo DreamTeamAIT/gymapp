@@ -14,6 +14,44 @@ import net.gym.customer.model.Customer;
 import net.gym.classes.dao.JDBCUtils;
 
 public class CustomerDao {
+	//This resets our database. Used for testin purposes.
+	public int ResetCustomerDatabase() throws ClassNotFoundException
+	{
+		Class.forName("com.mysql.jdbc.Driver");
+		String DROP_DATABASEString = "DROP TABLE IF EXISTS customer ;";
+		String CREATE_DATABASEString =  "CREATE TABLE if not exists `customer` ("
+				+ "  `id` int NOT NULL AUTO_INCREMENT,"
+				+ "  `first_name` varchar(20) DEFAULT NULL,"
+				+ "  `last_name` varchar(20) DEFAULT NULL,"
+				+ "  `password` varchar(20) DEFAULT NULL,"
+				+ "  `email` varchar(100) DEFAULT NULL,"
+				+ "  PRIMARY KEY (`id`)"
+				+ ") ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci"
+				+ ";";
+		String INSERT_ONE = "INSERT INTO customer (id, first_name, last_name, password, email)"
+				+ "VALUES (1, \"Peter\", \"Curry\", \"12345\", \"email@email.com\");";
+		String INSERT_TWO =  "INSERT INTO customer (id, first_name, last_name, password, email)"
+				+ "VALUES (2, \"Paul\", \"Rice\", \"678910\", \"paulrocks@email.com\");";
+		int result = 0;
+		try (Connection connection = JDBCUtils.getConnection();
+	            // Step 2:Create a statement using connection object
+	            PreparedStatement deleteDatabasePreparedStatement = connection.prepareStatement(DROP_DATABASEString) ;
+				PreparedStatement createDatabasePreparedStatement = connection.prepareStatement(CREATE_DATABASEString);
+				PreparedStatement insertOnePreparedStatement = connection.prepareStatement(INSERT_ONE);
+				PreparedStatement insertTwoPreparedStatement = connection.prepareStatement(INSERT_TWO)) 
+		
+		{
+			
+			deleteDatabasePreparedStatement.execute();
+			createDatabasePreparedStatement.execute();
+			insertOnePreparedStatement.execute();
+			insertTwoPreparedStatement.execute();
+			} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
 	//We want to make sure we don't have duplicate emails or passwords. This code checks for that by counting how many 
 	// duplicates of the new email and password we get and returns an appropiate error message.
 	public String checkCustomer(Customer customer) throws ClassNotFoundException
@@ -111,6 +149,7 @@ public class CustomerDao {
         }
 }
     // Before deleting a customer, we check to make sure they exist.
+    //Also useful for checking whether certain customers exist
     public boolean deleteChecker(Customer customer) throws ClassNotFoundException
     {
     	Class.forName("com.mysql.jdbc.Driver");
@@ -142,6 +181,8 @@ public class CustomerDao {
     }
     //When logging in, we want to check whether the username and password match an existing entry. It's similar the check for existing user for registration,
     // except we're looking for entries with the same username and password.
+    //Obselete: Someone else made a better checker
+    /*
     public boolean logInChecker(Customer customer) throws ClassNotFoundException
     {
     	Class.forName("com.mysql.jdbc.Driver");
@@ -170,14 +211,15 @@ public class CustomerDao {
 	            return false;
 	        }
     }
+    */
     //This updates our entry. We only want to update variables that were filled in, so we ignore empty fields.
-    public void updateCustomer(Customer customer, String ID) throws ClassNotFoundException
+    public void updateCustomer(Customer customer) throws ClassNotFoundException
     {
     	Class.forName("com.mysql.jdbc.Driver");
     	String UPDATE_SQL = "";
     	if(!(customer.getFirstName().equals("")))
 		{
-    		UPDATE_SQL = "UPDATE customer set first_name = \"" + customer.getFirstName() + "\" where id = " + ID +";";
+    		UPDATE_SQL = "UPDATE customer set first_name = \"" + customer.getFirstName() + "\" where id = " + customer.getId()+";";
     		try (Connection connection = JDBCUtils.getConnection();
     	            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) 
     		{
@@ -192,7 +234,7 @@ public class CustomerDao {
     	
     	if(!(customer.getLastName().equals("")))
 		{
-    		UPDATE_SQL = "UPDATE customer set last_name = \"" + customer.getLastName() + "\" where id = " + ID +";";
+    		UPDATE_SQL = "UPDATE customer set last_name = \"" + customer.getLastName() + "\" where id = " + customer.getId() +";";
     		try (Connection connection = JDBCUtils.getConnection();
     	            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) 
     		{
@@ -207,7 +249,7 @@ public class CustomerDao {
     	
     	if(!(customer.getEmail().equals("")))
 		{
-    		UPDATE_SQL = "UPDATE customer set email = \"" + customer.getEmail() + "\" where id = " + ID +";";
+    		UPDATE_SQL = "UPDATE customer set email = \"" + customer.getEmail() + "\" where id = " + customer.getId() +";";
     		try (Connection connection = JDBCUtils.getConnection();
     	            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) 
     		{
@@ -222,7 +264,7 @@ public class CustomerDao {
     	
     	if(!(customer.getPassword().equals("")))
 		{
-    		UPDATE_SQL = "UPDATE customer set password = \"" + customer.getPassword() + "\" where id = " + ID +";";
+    		UPDATE_SQL = "UPDATE customer set password = \"" + customer.getPassword() + "\" where id = " + customer.getId() +";";
     		try (Connection connection = JDBCUtils.getConnection();
     	            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SQL);) 
     		{

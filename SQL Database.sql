@@ -3,14 +3,14 @@ create database if not exists gym;
 use gym;
 
 #Login set up
-drop table if exists login;
-CREATE TABLE if not exists `login` (
+drop table if exists users;
+CREATE TABLE if not exists `users` (
   `username` varchar(45) NOT NULL,
   `password` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`username`)
 );
-Insert into login Values ("Peter", "12345");
-Insert into login Values ("t", "t");
+Insert into users Values ("Peter", "12345");
+Insert into users Values ("t", "t");
 
 #Classes setup
 drop table if exists classes;
@@ -69,7 +69,7 @@ DROP TABLE IF EXISTS timetable;
     SELECT * FROM classes;
     SELECT * FROM instructor;
     SELECT * FROM customer;
-    SELECT * FROM login;
+    SELECT * FROM users;
     
 
     
